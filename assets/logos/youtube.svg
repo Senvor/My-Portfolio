@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="YouTube logo">
+  <rect x="2" y="5" width="20" height="14" rx="4" fill="#ff0000"/>
+  <path d="M10 8.5l5.5 3.5L10 15.5V8.5z" fill="#fff"/>
+</svg>
