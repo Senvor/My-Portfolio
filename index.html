@@ -1,562 +1,400 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Senvor - Coding & Graphic Designer</title>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Playfair+Display:wght@400;700&family=Press+Start+2P&display=swap" rel="stylesheet">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Senvor</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0F130C;
+    --surface: #1A2015;
+    --surface-2: #161B12;
+    --ink: #EFE8D8;
+    --ink-dim: #ADAB9C;
+    --accent: #E2703B;
+    --line: #4B5A3E;
+  }
 
-        body {
-            font-family: 'Montserrat', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            line-height: 1.6;
-            color: #f2f2f2;
-            background: linear-gradient(135deg, #050505 0%, #290000 100%);
-            min-height: 100vh;
-        }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
 
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
-        }
+  html { scroll-behavior: smooth; }
 
-        header {
-            background: rgba(20, 20, 20, 0.95);
-            padding: 40px 20px;
-            border-radius: 10px;
-            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.4);
-            text-align: center;
-            margin-bottom: 40px;
-            animation: slideDown 0.6s ease-out;
-        }
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'Newsreader', Georgia, serif;
+    font-size: 18px;
+    line-height: 1.7;
+  }
 
-        @keyframes slideDown {
-            from {
-                opacity: 0;
-                transform: translateY(-30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
+  @media (prefers-reduced-motion: reduce) {
+    * { animation: none !important; transition: none !important; }
+  }
 
-        h1 {
-            font-size: 3em;
-            background: linear-gradient(135deg, #ff3a3a 0%, #bd0000 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            margin-bottom: 10px;
-            letter-spacing: 2px;
-        }
+  .wrap {
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 64px 28px 100px;
+    display: grid;
+    grid-template-columns: 210px 1fr;
+    gap: 64px;
+  }
 
-        .tagline {
-            font-size: 1.3em;
-            color: #666;
-            margin-bottom: 30px;
-        }
+  /* left rail */
+  .rail {
+    position: sticky;
+    top: 64px;
+    align-self: start;
+    height: fit-content;
+  }
 
-        .about {
-            background: rgba(18, 18, 18, 0.95);
-            padding: 40px;
-            border-radius: 10px;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
-            margin-bottom: 40px;
-            animation: fadeIn 0.8s ease-out 0.2s backwards;
-        }
+  .rail .role {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    color: var(--ink-dim);
+    margin-bottom: 10px;
+  }
 
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
+  .rail h1 {
+    font-family: 'IBM Plex Mono', monospace;
+    font-weight: 600;
+    font-size: 1.7em;
+    letter-spacing: -0.01em;
+    margin-bottom: 28px;
+  }
 
-        .about h2 {
-            color: #667eea;
-            margin-bottom: 20px;
-            font-size: 2em;
-        }
+  .rail nav ul {
+    list-style: none;
+    border-left: 1px solid var(--line);
+    animation: grow-h 1s ease-out both;
+    transform-origin: top;
+  }
 
-        .about p {
-            font-size: 1.1em;
-            color: #555;
-            line-height: 1.8;
-        }
+  @keyframes grow-h {
+    from { transform: scaleY(0); }
+    to { transform: scaleY(1); }
+  }
 
-        .interests {
-            background: rgba(18, 18, 18, 0.95);
-            padding: 40px;
-            border-radius: 10px;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
-            margin-bottom: 40px;
-            animation: fadeIn 0.8s ease-out 0.4s backwards;
-        }
+  .rail nav li {
+    margin-bottom: 4px;
+  }
 
-        .interests h2 {
-            color: #667eea;
-            margin-bottom: 30px;
-            font-size: 2em;
-        }
+  .rail nav a {
+    display: block;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 13px;
+    color: var(--ink-dim);
+    text-decoration: none;
+    padding: 6px 0 6px 16px;
+    border-left: 2px solid transparent;
+    margin-left: -1px;
+    transition: color 0.15s ease, border-color 0.15s ease;
+  }
 
-        .interests-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 30px;
-        }
+  .rail nav a:hover,
+  .rail nav a:focus-visible {
+    color: var(--ink);
+    border-color: var(--accent);
+  }
 
-        .interest-card {
-            background: linear-gradient(135deg, #0d0d0d 0%, #960000 100%);
-            padding: 30px;
-            border-radius: 10px;
-            color: white;
-            text-align: center;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            cursor: pointer;
-        }
+  /* right content */
+  main { min-width: 0; }
 
-        .interest-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 40px rgba(102, 126, 234, 0.4);
-        }
+  section {
+    padding-bottom: 64px;
+    scroll-margin-top: 64px;
+  }
 
-        .interest-card h3 {
-            font-size: 1.8em;
-            margin-bottom: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 12px;
-        }
+  section h2 {
+    font-family: 'IBM Plex Mono', monospace;
+    font-weight: 500;
+    font-size: 1em;
+    color: var(--ink-dim);
+    margin-bottom: 18px;
+  }
 
-        .interest-icon {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            width: 42px;
-            height: 42px;
-            border-radius: 12px;
-            background: rgba(255, 255, 255, 0.12);
-            color: #ffeded;
-            font-size: 1.1em;
-        }
+  section p {
+    max-width: 62ch;
+  }
 
-        .interest-icon.design-icon {
-            background: linear-gradient(135deg, #ff3a3a 0%, #ff8a00 100%);
-            color: white;
-        }
+  section p + p { margin-top: 1em; }
 
-        .interest-icon.code-icon {
-            background: linear-gradient(135deg, #ff1f1f 0%, #a70000 100%);
-            color: white;
-        }
+  /* currently building — full-width highlighted band, breaks the column rhythm */
+  .now {
+    background: var(--surface);
+    border-radius: 4px;
+    padding: 32px 36px;
+    margin: 0 -36px 64px;
+    border-top: 2px solid var(--accent);
+  }
 
-        .interest-card p {
-            font-size: 1em;
-            opacity: 0.9;
-        }
+  .now h2 { color: var(--accent); margin-bottom: 14px; }
+  .now p { max-width: 68ch; }
 
-        .languages {
-            background: rgba(18, 18, 18, 0.95);
-            padding: 30px;
-            border-radius: 10px;
-            margin-bottom: 40px;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
-        }
+  .now .meta {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12.5px;
+    color: var(--ink-dim);
+    margin-top: 16px;
+  }
 
-        .languages h2 {
-            color: #ff4d4d;
-            margin-bottom: 16px;
-            font-size: 1.8em;
-        }
+  /* skills — pill chips, varied weight by proficiency */
+  .skills-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    list-style: none;
+  }
 
-        .language-list {
-            display: flex;
-            gap: 16px;
-            flex-wrap: wrap;
-        }
+  .skills-list li {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 13px;
+    padding: 7px 14px;
+    border: 1px solid var(--line);
+    border-radius: 20px;
+    color: var(--ink);
+  }
 
-        .language {
-            background: linear-gradient(135deg, #120000 0%, #bb0000 100%);
-            padding: 14px 18px;
-            border-radius: 12px;
-            color: white;
-            min-width: 140px;
-            text-align: center;
-        }
+  .skills-list li.early {
+    color: var(--ink-dim);
+    border-style: dashed;
+  }
 
-        .language .lang-name {
-            font-weight: 700;
-            margin-bottom: 6px;
-        }
+  /* project grid */
+  .work-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+  }
 
-        .language .lang-level {
-            font-size: 0.9em;
-            opacity: 0.95;
-        }
+  .work-card {
+    background: var(--surface-2);
+    border-radius: 4px;
+    padding: 24px;
+  }
 
-        .contacts {
-            background: rgba(18, 18, 18, 0.95);
-            padding: 40px;
-            border-radius: 10px;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
-            animation: fadeIn 0.8s ease-out 0.6s backwards;
-        }
+  .work-card h3 {
+    font-family: 'IBM Plex Mono', monospace;
+    font-weight: 500;
+    font-size: 1.05em;
+    margin-bottom: 10px;
+  }
 
-        .contacts h2 {
-            color: #ff4d4d;
-            margin-bottom: 30px;
-            font-size: 2em;
-            text-align: center;
-        }
+  .work-card p {
+    color: var(--ink-dim);
+    font-size: 0.95em;
+  }
 
-        .social-links {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-            gap: 24px;
-            margin-bottom: 30px;
-        }
+  .work-card .tech {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    color: var(--ink-dim);
+    margin-top: 14px;
+  }
 
-        .social-link {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 32px;
-            min-height: 220px;
-            background: linear-gradient(135deg, #120000 0%, #bb0000 100%);
-            color: white;
-            text-decoration: none;
-            border-radius: 22px;
-            transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
-            text-align: center;
-            border: 1px solid rgba(255, 255, 255, 0.08);
-        }
+  .work-card .links {
+    margin-top: 14px;
+    display: flex;
+    gap: 18px;
+  }
 
-        .social-link:hover {
-            transform: translateY(-8px) scale(1.03);
-            box-shadow: 0 22px 50px rgba(255, 0, 0, 0.35);
-            background: linear-gradient(135deg, #330000 0%, #ff1f1f 100%);
-        }
+  .work-card a {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 13px;
+    color: var(--accent);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.15s ease;
+  }
 
-        .social-link .social-icon {
-            width: 72px;
-            height: 72px;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 18px;
-            flex-shrink: 0;
-        }
+  .work-card a:hover,
+  .work-card a:focus-visible {
+    border-color: var(--accent);
+  }
 
-        .social-link .social-icon svg,
-        .social-link .social-icon img {
-            width: 100%;
-            height: 100%;
-            display: block;
-        }
+  /* up next — visually distinct, marked as unstarted */
+  .next-card {
+    border: 1px dashed var(--line);
+    border-radius: 4px;
+    padding: 22px 24px;
+  }
 
-        .social-link .platform {
-            font-size: 1em;
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-            opacity: 0.85;
-            margin-bottom: 10px;
-        }
+  .next-card .status {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: var(--ink-dim);
+    text-transform: lowercase;
+    margin-bottom: 8px;
+  }
 
-        .social-link .username {
-            font-size: 1.2em;
-            font-weight: 700;
-            line-height: 1.2;
-        }
+  .next-card h3 {
+    font-family: 'IBM Plex Mono', monospace;
+    font-weight: 500;
+    font-size: 1.05em;
+    margin-bottom: 8px;
+  }
 
-        footer {
-            text-align: center;
-            color: white;
-            margin-top: 40px;
-            font-size: 0.95em;
-        }
+  .next-card p { color: var(--ink-dim); font-size: 0.95em; }
 
-        @media (max-width: 768px) {
-            h1 {
-                font-size: 2em;
-            }
+  .next-card a {
+    display: inline-block;
+    margin-top: 12px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 13px;
+    color: var(--ink-dim);
+    text-decoration: none;
+    border-bottom: 1px solid var(--line);
+  }
 
-            .tagline {
-                font-size: 1.1em;
-            }
+  .next-card a:hover,
+  .next-card a:focus-visible { color: var(--accent); border-color: var(--accent); }
 
-            .interests-grid {
-                grid-template-columns: 1fr;
-            }
+  /* connect */
+  .connect-list { list-style: none; }
+  .connect-list li { margin-bottom: 10px; }
 
-            header, .about, .interests, .contacts {
-                padding: 20px;
-            }
+  .connect-list a {
+    color: var(--ink);
+    text-decoration: none;
+    border-bottom: 1px solid var(--line);
+    padding-bottom: 1px;
+    transition: color 0.15s ease, border-color 0.15s ease;
+  }
 
-            .social-links {
-                grid-template-columns: 1fr;
-            }
-        }
-        /* Theme switcher styles and theme presets */
-        .theme-switcher {
-            position: fixed;
-            right: 18px;
-            top: 18px;
-            display: flex;
-            gap: 8px;
-            z-index: 1200;
-        }
+  .connect-list a:hover,
+  .connect-list a:focus-visible {
+    color: var(--accent);
+    border-color: var(--accent);
+  }
 
-        .theme-btn {
-            background: rgba(255,255,255,0.06);
-            color: white;
-            border: 1px solid rgba(255,255,255,0.06);
-            padding: 8px 10px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: 700;
-            font-size: 0.85em;
-            transition: transform 0.15s ease, background 0.15s ease, box-shadow 0.15s ease;
-        }
+  .connect-list .label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    color: var(--ink-dim);
+    display: inline-block;
+    width: 88px;
+  }
 
-        .theme-btn.active {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 18px rgba(0,0,0,0.5);
-            background: linear-gradient(135deg, #ff3a3a 0%, #bd0000 100%);
-        }
+  a:focus-visible, button:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+  }
 
-        /* Retro theme */
-        body[data-theme="retro"] {
-            background: linear-gradient(135deg, #fceabb 0%, #f8b500 100%);
-            color: #1b1b1b;
-            font-family: 'Press Start 2P', 'Courier New', monospace;
-            letter-spacing: 0.06em;
-        }
+  footer {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    color: var(--ink-dim);
+  }
 
-        body[data-theme="retro"] header,
-        body[data-theme="retro"] .about,
-        body[data-theme="retro"] .interests,
-        body[data-theme="retro"] .contacts,
-        body[data-theme="retro"] .languages {
-            background: rgba(255,255,255,0.95);
-            color: #1b1b1b;
-            box-shadow: 0 8px 30px rgba(0,0,0,0.08);
-        }
-
-        body[data-theme="retro"] .interest-card {
-            background: linear-gradient(135deg, #ffd89b 0%, #19547b 100%);
-            color: #fff;
-        }
-
-        body[data-theme="retro"] .social-link {
-            background: linear-gradient(135deg, #ffd89b 0%, #ff7b00 100%);
-        }
-
-        body[data-theme="retro"] h1 {
-            background: linear-gradient(135deg, #ff7b00 0%, #ffcc33 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            text-shadow: 0 2px 0 rgba(0,0,0,0.35);
-            font-size: 1.9rem;
-        }
-
-        /* Devil theme (dark red) */
-        body[data-theme="devil"] {
-            background: linear-gradient(135deg, #050505 0%, #290000 100%);
-            color: #f2f2f2;
-            font-family: 'Montserrat', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-
-        body[data-theme="devil"] header,
-        body[data-theme="devil"] .about,
-        body[data-theme="devil"] .interests,
-        body[data-theme="devil"] .contacts,
-        body[data-theme="devil"] .languages {
-            background: rgba(18,18,18,0.95);
-            color: #f2f2f2;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.4);
-        }
-
-        body[data-theme="devil"] .interest-card {
-            background: linear-gradient(135deg, #0d0d0d 0%, #960000 100%);
-            transition: transform 0.3s ease, box-shadow 0.3s ease, filter 0.3s ease;
-        }
-
-        body[data-theme="devil"] h1 {
-            text-shadow: 0 6px 22px rgba(180,0,0,0.45);
-        }
-
-        body[data-theme="devil"] .social-link {
-            background: linear-gradient(135deg, #120000 0%, #bb0000 100%);
-        }
-
-        /* God theme (bright, golden) */
-        body[data-theme="god"] {
-            background: linear-gradient(135deg, #e6f0ff 0%, #fff8e6 100%);
-            color: #1b1b1b;
-            font-family: 'Playfair Display', Georgia, serif;
-        }
-
-        body[data-theme="god"] header,
-        body[data-theme="god"] .about,
-        body[data-theme="god"] .interests,
-        body[data-theme="god"] .contacts,
-        body[data-theme="god"] .languages {
-            background: rgba(255,255,255,0.98);
-            color: #1b1b1b;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.06);
-        }
-
-        body[data-theme="god"] .interest-card {
-            background: linear-gradient(135deg, #fff1c9 0%, #ffe3a3 100%);
-            color: #1b1b1b;
-            transform: translateZ(0);
-        }
-
-        body[data-theme="god"] .social-link {
-            background: linear-gradient(135deg, #fff1c9 0%, #ffd36b 100%);
-            color: #1b1b1b;
-            box-shadow: 0 12px 40px rgba(255,200,90,0.12);
-        }
-    </style>
+  @media (max-width: 820px) {
+    .wrap {
+      grid-template-columns: 1fr;
+      padding: 40px 20px 80px;
+      gap: 40px;
+    }
+    .rail { position: static; }
+    .rail nav ul { display: flex; flex-wrap: wrap; border-left: none; gap: 4px 0; }
+    .rail nav a { border-left: none; border-bottom: 2px solid transparent; padding: 4px 12px 4px 0; }
+    .now { margin: 0 0 48px; }
+    .work-grid { grid-template-columns: 1fr; }
+    body { font-size: 16.5px; }
+  }
+</style>
 </head>
-<body data-theme="devil">
-    <div class="container">
-        <header>
-            <h1>SENVOR</h1>
-            <p class="tagline">Creative Developer & Graphic Designer</p>
-        </header>
+<body>
+  <div class="wrap">
+    <div class="rail">
+      <div class="role">developer &amp; graphic designer</div>
+      <h1>Senvor</h1>
+      <nav aria-label="Section navigation">
+        <ul>
+          <li><a href="#about">About</a></li>
+          <li><a href="#now">Now building</a></li>
+          <li><a href="#skills">Skills</a></li>
+          <li><a href="#work">Work</a></li>
+          <li><a href="#connect">Connect</a></li>
+        </ul>
+      </nav>
+    </div>
 
-        <div class="theme-switcher" role="toolbar" aria-label="Theme switcher">
-            <button class="theme-btn" data-theme="retro" aria-pressed="false">Retro</button>
-            <button class="theme-btn active" data-theme="devil" aria-pressed="true">Devil</button>
-            <button class="theme-btn" data-theme="god" aria-pressed="false">God</button>
+    <main>
+      <section id="about">
+        <h2>About</h2>
+        <p>I'm self-taught — I learn by building things rather than working through tutorials. Most of what I know about code came from getting stuck on a real project and figuring a way through it.</p>
+        <p>Alongside that, I do graphic design: logos, layouts, and visual identity work.</p>
+      </section>
+
+      <section id="now">
+        <div class="now">
+          <h2>Currently building</h2>
+          <p><strong>Evogen</strong> — a generational life-sim in Godot. When your character dies, you don't restart: you inherit their legacy and keep playing as their descendant. Traits, mutations, and past choices carry forward across generations.</p>
+          <div class="meta">Right now: building the data layer — a Character resource per life, and a Bloodline manager tracking the family tree.</div>
+        </div>
+      </section>
+
+      <section id="skills">
+        <h2>Skills</h2>
+        <ul class="skills-list">
+          <li>HTML</li>
+          <li>CSS</li>
+          <li>GDScript</li>
+          <li class="early">Java</li>
+          <li>Graphic design</li>
+          <li>Pixel Art</li>
+          <li>CAD</li>
+          <li>JavaScript</li>
+        </ul>
+      </section>
+
+      <section id="work">
+        <h2>Work</h2>
+        <div class="work-grid">
+          <div class="work-card">
+            <h3>Cockroach Janta Party</h3>
+            <p>An informational site about the CJP movement — my first project, shipped and live.</p>
+            <div class="tech">HTML · CSS</div>
+            <div class="links">
+              <a href="https://cockroach-janta-party-six.vercel.app" target="_blank" rel="noopener noreferrer">Live site</a>
+              <a href="https://github.com/Senvor/cockroach-janta-party" target="_blank" rel="noopener noreferrer">Repository</a>
+            </div>
+          </div>
+
+          <div class="work-card">
+            <h3>Evogen</h3>
+            <p>Generational life-sim game — inheritance replaces respawning. See "Currently building" above for where it stands.</p>
+            <div class="tech">Godot Engine · GDScript</div>
+            <div class="links">
+              <a href="[REPO LINK]" target="_blank" rel="noopener noreferrer">Repository</a>
+            </div>
+          </div>
         </div>
 
-        <section class="about">
-            <h2>About Me</h2>
-            <p>
-                Hey — I'm <strong>Senvor</strong>. I build things people enjoy using: websites, apps, and visuals with attention to detail. I blend straightforward code with thoughtful design to solve problems, tell stories, and make projects feel polished and useful.
-            </p>
-        </section>
+        <div style="margin-top: 24px;">
+          <div class="next-card">
+            <div class="status">up next — not started</div>
+            <h3>Obsidian</h3>
+            <p>An obsidian-themed keyboard project, planned but not yet begun.</p>
+            <a href="https://github.com/Senvor/Obsidian" target="_blank" rel="noopener noreferrer">Repository</a>
+          </div>
+        </div>
+      </section>
 
-        <section class="interests">
-            <h2>My Interests</h2>
-            <div class="interests-grid">
-                <div class="interest-card">
-                    <h3><span class="interest-icon code-icon">&lt;/&gt;</span> Coding</h3>
-                    <p>I enjoy turning ideas into useful software — from focused scripts to full web apps. I write readable, reliable code that helps people get things done.</p>
-                </div>
-                <div class="interest-card">
-                    <h3><span class="interest-icon design-icon">🖌️</span> Graphic Design</h3>
-                    <p>I create bold, clear visuals — logos, layouts, and color systems — that help messages land and give products a confident look and feel.</p>
-                </div>
-            </div>
-        </section>
+      <section id="connect">
+        <h2>Connect</h2>
+        <ul class="connect-list">
+          <li><span class="label">GitHub</span><a href="https://github.com/Senvor" target="_blank" rel="noopener noreferrer">github.com/Senvor</a></li>
+          <li><span class="label">Reddit</span><a href="https://reddit.com/user/senvor" target="_blank" rel="noopener noreferrer">u/senvor</a></li>
+          <li><span class="label">Discord</span><a href="https://discord.com/users/s3nvor" target="_blank" rel="noopener noreferrer">s3nvor</a></li>
+          <li><span class="label">X</span><a href="https://x.com/s3nvor" target="_blank" rel="noopener noreferrer">s3nvor</a></li>
+          <li><span class="label">Instagram</span><a href="https://instagram.com/s3nvor" target="_blank" rel="noopener noreferrer">s3nvor</a></li>
+          <li><span class="label">YouTube</span><a href="https://youtube.com/@s3nvor" target="_blank" rel="noopener noreferrer">s3nvor</a></li>
+        </ul>
+      </section>
 
-        <section class="languages">
-            <h2>Languages & Learning</h2>
-            <div class="language-list">
-                <div class="language">
-                    <div class="lang-name">Java</div>
-                    <div class="lang-level">Basic — Currently learning</div>
-                </div>
-                <div class="language">
-                    <div class="lang-name">HTML</div>
-                    <div class="lang-level">Basic — Currently learning</div>
-                </div>
-                <div class="language">
-                    <div class="lang-name">CSS</div>
-                    <div class="lang-level">Basic — Currently learning</div>
-                </div>
-            </div>
-        </section>
-
-        <section class="contacts">
-            <h2>Connect With Me</h2>
-            <div class="social-links">
-                <a href="https://discord.com/users/senvor_" class="social-link" target="_blank" rel="noopener noreferrer">
-                    <span class="social-icon" aria-hidden="true">
-                        <img src="assets/logos/discord.svg" alt="Discord logo">
-                    </span>
-                    <div class="platform">Discord</div>
-                    <div class="username">senvor_</div>
-                </a>
-                <a href="https://x.com/senvor_" class="social-link" target="_blank" rel="noopener noreferrer">
-                    <span class="social-icon" aria-hidden="true">
-                            <img src="assets/logos/x.svg" alt="X logo">
-                    </span>
-                    <div class="platform">X</div>
-                    <div class="username">senvor_</div>
-                </a>
-                <a href="https://instagram.com/senvor.yt" class="social-link" target="_blank" rel="noopener noreferrer">
-                    <span class="social-icon" aria-hidden="true">
-                        <img src="assets/logos/instagram.svg" alt="Instagram logo">
-                    </span>
-                    <div class="platform">Instagram</div>
-                    <div class="username">senvor.yt</div>
-                </a>
-                <a href="https://youtube.com/@senvormc" class="social-link" target="_blank" rel="noopener noreferrer">
-                    <span class="social-icon" aria-hidden="true">
-                        <img src="assets/logos/youtube.svg" alt="YouTube logo">
-                    </span>
-                    <div class="platform">YouTube</div>
-                    <div class="username">senvormc</div>
-                </a>
-            </div>
-        </section>
-
-        <footer>
-            <p>&copy; 2026 Senvor. All rights reserved.</p>
-        </footer>
-    </div>
-    <script>
-        (function(){
-            const btns = document.querySelectorAll('.theme-btn');
-            const root = document.body; // use body so CSS selectors match
-            const STORAGE_KEY = 'senvor_theme';
-
-            function applyTheme(name){
-                if(!root) return;
-                root.setAttribute('data-theme', name);
-                // also set on html for any global uses
-                try{ document.documentElement.setAttribute('data-theme', name); }catch(e){}
-                btns.forEach(b=>{
-                    const active = b.getAttribute('data-theme') === name;
-                    b.classList.toggle('active', active);
-                    b.setAttribute('aria-pressed', active? 'true':'false');
-                });
-            }
-
-            if(btns && btns.length){
-                btns.forEach(b=>{
-                    b.addEventListener('click', ()=>{
-                        const t = b.getAttribute('data-theme');
-                        applyTheme(t);
-                        try{ localStorage.setItem(STORAGE_KEY, t); }catch(e){}
-                    });
-                });
-            }
-
-            // initialize from storage or use existing data-theme on body
-            try{
-                const saved = localStorage.getItem(STORAGE_KEY);
-                const initial = saved || root.getAttribute('data-theme') || 'devil';
-                applyTheme(initial);
-            }catch(e){ applyTheme(root && root.getAttribute('data-theme') || 'devil'); }
-        })();
-    </script>
+      <footer>&copy; 2026 Senvor</footer>
+    </main>
+  </div>
 </body>
 </html>
