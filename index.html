@@ -55,6 +55,7 @@
     font-size: 12px;
     color: var(--ink-dim);
     margin-bottom: 10px;
+    min-width: 28ch;
   }
 
   .rail h1 {
@@ -97,6 +98,11 @@
   .rail nav a:focus-visible {
     color: var(--ink);
     border-color: var(--accent);
+  }
+
+  .rail nav a.active {
+    color: var(--accent);
+    border-left: 2px solid var(--accent);
   }
 
   /* right content */
@@ -173,6 +179,7 @@
     background: var(--surface-2);
     border-radius: 4px;
     padding: 24px;
+    position: relative;
   }
 
   .work-card h3 {
@@ -219,6 +226,33 @@
     border: 1px dashed var(--line);
     border-radius: 4px;
     padding: 22px 24px;
+    position: relative;
+  }
+
+  .expand-toggle {
+    position: absolute;
+    top: 12px;
+    right: 16px;
+    border: 0;
+    background: transparent;
+    color: var(--ink-dim);
+    cursor: pointer;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 16px;
+    line-height: 1;
+    padding: 4px;
+  }
+
+  .expand-toggle:hover,
+  .expand-toggle:focus-visible {
+    color: var(--accent);
+  }
+
+  .details {
+    display: none;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.25s ease;
   }
 
   .next-card .status {
@@ -269,6 +303,22 @@
     border-color: var(--accent);
   }
 
+  .copy-link {
+    background: transparent;
+    border: 0;
+    color: var(--ink-dim);
+    cursor: pointer;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    margin-left: 10px;
+    padding: 0;
+  }
+
+  .copy-link:hover,
+  .copy-link:focus-visible {
+    color: var(--accent);
+  }
+
   .connect-list .label {
     font-family: 'IBM Plex Mono', monospace;
     font-size: 12px;
@@ -296,7 +346,22 @@
     }
     .rail { position: static; }
     .rail nav ul { display: flex; flex-wrap: wrap; border-left: none; gap: 4px 0; }
-    .rail nav a { border-left: none; border-bottom: 2px solid transparent; padding: 4px 12px 4px 0; }
+    .rail nav a {
+      display: inline-block;
+      border-left: none;
+      border-bottom: 2px solid transparent;
+      padding: 4px 8px 4px 0;
+      margin-left: 0;
+    }
+    .rail nav a:hover,
+    .rail nav a:focus-visible {
+      border-left: none;
+      border-bottom-color: var(--line);
+    }
+    .rail nav a.active {
+      border-left: none;
+      border-bottom-color: var(--accent);
+    }
     .now { margin: 0 0 48px; }
     .work-grid { grid-template-columns: 1fr; }
     body { font-size: 16.5px; }
@@ -355,7 +420,7 @@
           <div class="work-card">
             <h3>Cockroach Janta Party</h3>
             <p>An informational site about the CJP movement — my first project, shipped and live.</p>
-            <div class="tech">HTML · CSS</div>
+            <div class="tech">HTML · CSS · JS</div>
             <div class="links">
               <a href="https://cockroach-janta-party-six.vercel.app" target="_blank" rel="noopener noreferrer">Live site</a>
               <a href="https://github.com/Senvor/cockroach-janta-party" target="_blank" rel="noopener noreferrer">Repository</a>
@@ -365,7 +430,7 @@
           <div class="work-card">
             <h3>Evogen</h3>
             <p>Generational life-sim game — inheritance replaces respawning. See "Currently building" above for where it stands.</p>
-            <div class="tech">Godot Engine · GDScript</div>
+            <div class="tech">Godot Engine · GDScript · LibreSprite</div>
             <div class="links">
               <a href="https://github.com/Senvor/EvoGen" target="_blank" rel="noopener noreferrer">Repository</a>
             </div>
@@ -389,7 +454,7 @@
           <li><span class="label">Reddit</span><a href="https://reddit.com/user/senvor" target="_blank" rel="noopener noreferrer">u/senvor</a></li>
           <li><span class="label">Discord</span><a href="https://discord.com/users/s3nvor" target="_blank" rel="noopener noreferrer">s3nvor</a></li>
           <li><span class="label">X</span><a href="https://x.com/s3nvor" target="_blank" rel="noopener noreferrer">x.com/s3nvor</a></li>
-          <li><span class="label">Instagram</span><a href="https://instagram.com/s3nvor" target="_blank" rel="noopener noreferrer">instagram.com/s3nvor</a></li>
+          <li><span class="label">Instagram</span><a href="https://instagram.com/s3nvor" target="_blank" rel="noopener noreferrer">insta.com/s3nvor</a></li>
           <li><span class="label">YouTube</span><a href="https://youtube.com/@s3nvor" target="_blank" rel="noopener noreferrer">@s3nvor</a></li>
         </ul>
       </section>
@@ -397,5 +462,141 @@
       <footer>&copy; 2026 Senvor</footer>
     </main>
   </div>
+  <script>
+    (() => {
+      const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      const navLinks = [...document.querySelectorAll('.rail nav a')];
+      const sections = [...document.querySelectorAll('main section[id]')];
+
+      navLinks.forEach((link) => {
+        link.addEventListener('click', (event) => {
+          const target = document.querySelector(link.getAttribute('href'));
+          if (!target) return;
+
+          event.preventDefault();
+          target.scrollIntoView({ behavior: reducedMotion ? 'auto' : 'smooth' });
+          history.pushState(null, '', link.getAttribute('href'));
+          navLinks.forEach((item) => {
+            const isActive = item === link;
+            item.classList.toggle('active', isActive);
+            if (isActive) {
+              item.setAttribute('aria-current', 'true');
+            } else {
+              item.removeAttribute('aria-current');
+            }
+          });
+        });
+      });
+
+      function setActiveSection() {
+        const activationOffset = 100;
+        const currentSection = sections.reduce((current, section) => {
+          return section.getBoundingClientRect().top <= activationOffset
+            ? section
+            : current;
+        }, sections[0]);
+
+        navLinks.forEach((link) => {
+          const isActive = link.getAttribute('href') === `#${currentSection?.id}`;
+          link.classList.toggle('active', isActive);
+          if (isActive) {
+            link.setAttribute('aria-current', 'true');
+          } else {
+            link.removeAttribute('aria-current');
+          }
+        });
+      }
+
+      const sectionObserver = new IntersectionObserver(setActiveSection, {
+        rootMargin: '-100px 0px 0px 0px',
+        threshold: [0, 1]
+      });
+      sections.forEach((section) => sectionObserver.observe(section));
+      setActiveSection();
+
+      document.querySelectorAll('.work-card, .next-card').forEach((card, index) => {
+        const details = document.createElement('div');
+        const detailsId = `work-details-${index + 1}`;
+        const toggle = document.createElement('button');
+
+        details.className = 'details';
+        details.id = detailsId;
+        details.innerHTML = '<!-- add extra project detail here -->';
+
+        toggle.type = 'button';
+        toggle.className = 'expand-toggle';
+        toggle.textContent = '+';
+        toggle.setAttribute('aria-label', 'Show project details');
+        toggle.setAttribute('aria-expanded', 'false');
+        toggle.setAttribute('aria-controls', detailsId);
+
+        card.append(toggle, details);
+
+        toggle.addEventListener('click', () => {
+          const isExpanded = toggle.getAttribute('aria-expanded') === 'true';
+          toggle.setAttribute('aria-expanded', String(!isExpanded));
+          toggle.setAttribute('aria-label', isExpanded ? 'Show project details' : 'Hide project details');
+          toggle.textContent = isExpanded ? '+' : '-';
+
+          if (reducedMotion) {
+            details.style.display = isExpanded ? 'none' : 'block';
+            details.style.maxHeight = isExpanded ? '0' : 'none';
+            return;
+          }
+
+          if (isExpanded) {
+            details.style.maxHeight = `${details.scrollHeight}px`;
+            details.addEventListener('transitionend', () => {
+              details.style.display = 'none';
+            }, { once: true });
+            requestAnimationFrame(() => {
+              details.style.maxHeight = '0';
+            });
+          } else {
+            details.style.display = 'block';
+            details.style.maxHeight = '0';
+            requestAnimationFrame(() => {
+              details.style.maxHeight = `${details.scrollHeight}px`;
+            });
+          }
+        });
+      });
+
+      document.querySelectorAll('.connect-list a').forEach((link) => {
+        const copyButton = document.createElement('button');
+        copyButton.type = 'button';
+        copyButton.className = 'copy-link';
+        copyButton.textContent = 'copy';
+        copyButton.setAttribute('aria-label', `Copy ${link.textContent} link`);
+        link.after(copyButton);
+
+        copyButton.addEventListener('click', async () => {
+          try {
+            await navigator.clipboard.writeText(link.href);
+            copyButton.textContent = 'copied';
+            window.setTimeout(() => {
+              copyButton.textContent = 'copy';
+            }, 1500);
+          } catch {
+            // Clipboard access is optional.
+          }
+        });
+      });
+
+      const role = document.querySelector('.rail .role');
+      const roleText = role.textContent;
+      if (reducedMotion) {
+        role.textContent = roleText;
+      } else {
+        role.textContent = '';
+        roleText.split('').forEach((character, index) => {
+          window.setTimeout(() => {
+            role.textContent += character;
+          }, (900 / roleText.length) * (index + 1));
+        });
+      }
+    })();
+  </script>
 </body>
 </html>
